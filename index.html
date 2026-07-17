@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es-ES" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#145c9e" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <meta name="description" content="Calculadora local de salario, Seguridad Social e IRPF para España y Madrid, ejercicio 2026." />
+    <title>Calculadora Salario 2026</title>
+    <script type="module" crossorigin src="./assets/index-Dt_mRfsn.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DxPHUQYb.css">
+  <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
+  <body>
+    <main class="app-shell portable-app">
+      <header class="topbar">
+        <div class="title-block">
+          <div class="brand-kicker" aria-label="España, Madrid, 2026, cálculo local">
+            <span>España</span><span>Madrid</span><span>2026</span><span>Local</span>
+          </div>
+          <h1>Calculadora Salario 2026</h1>
+          <p class="app-subtitle">Del coste laboral total al salario neto, con Seguridad Social e IRPF explicados paso a paso.</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="install_app" class="install-button" type="button" hidden>Instalar</button>
+          <label class="theme-toggle" title="Cambiar modo claro/oscuro" aria-label="Cambiar modo claro u oscuro">
+            <input id="dark_mode" type="checkbox" />
+            <span class="toggle-track">
+              <span class="toggle-icon light" aria-hidden="true">☀</span>
+              <span class="toggle-icon dark" aria-hidden="true">☾</span>
+              <span class="toggle-thumb" aria-hidden="true"></span>
+            </span>
+          </label>
+        </div>
+      </header>
+
+      <details class="inputs-panel" open>
+        <summary>
+          <span class="summary-copy">
+            <span class="section-number">00</span>
+            <span><strong>Configura el cálculo</strong><small>Salario, situación personal y cotizaciones</small></span>
+          </span>
+          <span class="summary-arrow" aria-hidden="true">⌄</span>
+        </summary>
+
+        <section class="input-section" aria-labelledby="salary-inputs-heading">
+          <h2 id="salary-inputs-heading">Salario y residencia fiscal</h2>
+          <div class="input-grid">
+            <div class="field-card">
+              <label class="form-label" for="gross_annual">Bruto anual</label>
+              <input class="form-control" id="gross_annual" type="number" value="50000" min="0" step="0.01" inputmode="decimal" />
+              <p class="field-help">Importe bruto anual pactado con la empresa, antes de Seguridad Social e IRPF.</p>
+            </div>
+            <div class="field-card">
+              <label class="form-label" for="payments">Número de pagas</label>
+              <select class="form-select" id="payments"><option>12</option><option>13</option><option>14</option><option>15</option></select>
+              <p class="field-help">Si son más de 12, se asumen 12 ordinarias y el resto extraordinarias.</p>
+            </div>
+            <div class="field-card">
+              <label class="form-label" for="ccaa">Comunidad Autónoma</label>
+              <select class="form-select" id="ccaa" disabled><option>Madrid</option></select>
+              <p class="field-help">Sólo Madrid está disponible por el momento.</p>
+            </div>
+            <div class="field-card">
+              <label class="form-label" for="age">Edad</label>
+              <select class="form-select" id="age" data-range="16:100" data-selected="34"></select>
+              <p class="field-help">Edad del contribuyente para mínimos personales por edad.</p>
+            </div>
+            <div class="field-card">
+              <label class="form-label" for="civil_status">Situación familiar IRPF</label>
+              <select class="form-select" id="civil_status"></select>
+              <p class="field-help">Situación usada para los umbrales de obligación de retener.</p>
+            </div>
+            <div class="field-card">
+              <label class="form-label" for="disability_grade">Discapacidad contribuyente</label>
+              <div class="range-control"><input id="disability_grade" type="range" value="0" min="0" max="100" step="1" /><output for="disability_grade">0%</output></div>
+              <p class="field-help">Porcentaje reconocido. Los umbrales principales son 33% y 65%.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="input-section" aria-labelledby="ss-inputs-heading">
+          <h2 id="ss-inputs-heading">Seguridad Social</h2>
+          <div class="input-grid">
+            <div class="field-card">
+              <label class="form-label" for="ss_category">Grupo profesional</label>
+              <select class="form-select" id="ss_category"></select>
+              <p class="field-help">Grupo de cotización del Régimen General. Determina base mínima y máxima mensual.</p>
+            </div>
+            <div class="field-card">
+              <label class="form-label" for="accident_rate">Tipo AT/EP empresa</label>
+              <div class="range-control"><input id="accident_rate" type="range" value="2.05" min="0" max="10" step="0.01" /><output for="accident_rate">2,05%</output></div>
+              <p class="field-help">Cotización empresarial por accidentes de trabajo y enfermedades profesionales.</p>
+            </div>
+            <div class="field-card checkbox-card">
+              <label class="native-checkbox"><input id="professional_training" type="checkbox" checked /><span>Incluir Formación Profesional</span></label>
+              <p class="field-help">Normalmente activado en Régimen General: 0,60% empresa y 0,10% trabajador.</p>
+            </div>
+            <div class="field-card checkbox-card">
+              <label class="native-checkbox"><input id="include_solidarity" type="checkbox" checked /><span>Incluir cotización de solidaridad</span></label>
+              <p class="field-help">Aplica a la remuneración que excede la base máxima de cotización.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="input-section" aria-labelledby="deductions-inputs-heading">
+          <h2 id="deductions-inputs-heading">Gastos deducibles y mínimos personales</h2>
+          <div class="input-grid">
+            <div class="field-card checkbox-card">
+              <label class="native-checkbox"><input id="employment_expense_toggle" type="checkbox" /><span>Aplicar gasto deducible general de 2.000 EUR</span></label>
+              <p class="field-help">Déjalo apagado para una vista tipo nómina; actívalo para estimar declaración anual.</p>
+            </div>
+            <div class="field-card">
+              <label class="form-label" for="justified_expenses">Gastos deducibles justificados adicionales</label>
+              <input class="form-control" id="justified_expenses" type="number" value="0" min="0" step="100" inputmode="decimal" />
+              <p class="field-help">Importe anual adicional al gasto general de 2.000 EUR.</p>
+            </div>
+            <div class="field-card checkbox-card">
+              <label class="native-checkbox"><input id="assistance" type="checkbox" /><span>Asistencia / movilidad reducida</span></label>
+              <p class="field-help">Marca si aplica el incremento vinculado a discapacidad.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="input-section split-guidance" aria-label="Mínimos familiares">
+          <div>
+            <h2>Descendientes</h2>
+            <p class="section-note">Introduce números de personas que cumplen los requisitos legales de convivencia y rentas.</p>
+            <div class="input-grid compact">
+              <div class="field-card"><label class="form-label" for="children">Número de descendientes</label><select class="form-select person-select" id="children" data-min="0"></select><p class="field-help">Menores de 25 años o con derecho al mínimo.</p></div>
+              <div class="field-card"><label class="form-label" for="children_under_3">Menores de 3 años</label><select class="form-select person-select" id="children_under_3" data-min="0"></select><p class="field-help">De los descendientes anteriores, cuántos son menores de 3 años.</p></div>
+              <div class="field-card"><label class="form-label" for="child_disability_33_64">Discapacidad 33%-64%</label><select class="form-select person-select" id="child_disability_33_64" data-min="0"></select><p class="field-help">Descendientes con discapacidad en ese tramo.</p></div>
+              <div class="field-card"><label class="form-label" for="child_disability_65_plus">Discapacidad ≥65%</label><select class="form-select person-select" id="child_disability_65_plus" data-min="0"></select><p class="field-help">Descendientes con discapacidad igual o superior al 65%.</p></div>
+              <div class="field-card"><label class="form-label" for="child_assistance">Con asistencia</label><select class="form-select person-select" id="child_assistance" data-min="0"></select><p class="field-help">Número con derecho al incremento por asistencia.</p></div>
+              <div class="field-card"><label class="form-label" for="child_responsible_count">Contribuyentes que aplican el mínimo</label><select class="form-select person-select" id="child_responsible_count" data-min="1" data-selected="1"></select><p class="field-help">Usa 2 si el mínimo se reparte con el otro progenitor.</p></div>
+            </div>
+          </div>
+          <div>
+            <h2>Ascendientes</h2>
+            <p class="section-note">Introduce personas que cumplen los requisitos legales de parentesco, convivencia y rentas.</p>
+            <div class="input-grid compact">
+              <div class="field-card"><label class="form-label" for="ascendants">Número de ascendientes</label><select class="form-select person-select" id="ascendants" data-min="0"></select><p class="field-help">Ascendientes con derecho al mínimo por edad o discapacidad.</p></div>
+              <div class="field-card"><label class="form-label" for="ascendants_75">Ascendientes ≥75 años</label><select class="form-select person-select" id="ascendants_75" data-min="0"></select><p class="field-help">De los ascendientes anteriores, cuántos tienen 75 años o más.</p></div>
+              <div class="field-card"><label class="form-label" for="asc_disability_33_64">Discapacidad 33%-64%</label><select class="form-select person-select" id="asc_disability_33_64" data-min="0"></select><p class="field-help">Ascendientes con discapacidad en ese tramo.</p></div>
+              <div class="field-card"><label class="form-label" for="asc_disability_65_plus">Discapacidad ≥65%</label><select class="form-select person-select" id="asc_disability_65_plus" data-min="0"></select><p class="field-help">Ascendientes con discapacidad igual o superior al 65%.</p></div>
+              <div class="field-card"><label class="form-label" for="asc_assistance">Con asistencia</label><select class="form-select person-select" id="asc_assistance" data-min="0"></select><p class="field-help">Número con derecho al incremento por asistencia.</p></div>
+              <div class="field-card"><label class="form-label" for="asc_responsible_count">Contribuyentes que aplican el mínimo</label><select class="form-select person-select" id="asc_responsible_count" data-min="1" data-selected="1"></select><p class="field-help">Indica cuántos contribuyentes comparten el mínimo.</p></div>
+            </div>
+          </div>
+        </section>
+      </details>
+
+      <section class="results-intro">
+        <div><span class="section-eyebrow">Resultado anual</span><h2>La fotografía completa de tu salario</h2></div>
+        <p class="scope-note"><strong>Mensual = anual / 12.</strong> Las pagas normales y extraordinarias siguen el número de pagas seleccionado.</p>
+      </section>
+
+      <section class="kpi-strip" aria-label="Indicadores principales">
+        <div class="kpi concept-cost kpi-anchor"><div class="kpi-label">Coste empresa</div><div class="kpi-value" id="employer_cost">—</div></div>
+        <div class="kpi concept-gross"><div class="kpi-label">Bruto anual</div><div class="kpi-value" id="gross_annual_kpi">—</div></div>
+        <div class="kpi concept-ss-total"><div class="kpi-label">SS total / bruto</div><div class="kpi-value" id="ss_total_rate">—</div></div>
+        <div class="kpi concept-irpf"><div class="kpi-label">IRPF / bruto</div><div class="kpi-value" id="effective_irpf">—</div></div>
+        <div class="kpi concept-net kpi-anchor"><div class="kpi-label">Neto anual</div><div class="kpi-value" id="net_annual">—</div></div>
+      </section>
+
+      <section class="ledger-section flow-section">
+        <div class="section-heading"><span class="section-number">01</span><div><h2>Del coste empresa al neto</h2><p class="panel-note">Cada barra representa una etapa. Selecciona una para abrir su cálculo detallado.</p></div></div>
+        <div class="chart-stage"><div id="waterfall" role="img" aria-label="Gráfico desde el coste empresa hasta el salario neto"></div></div>
+        <div class="calculation-workspace">
+          <div class="calculation-toolbar">
+            <div><span class="section-eyebrow">Trazabilidad</span><h2>Cálculo paso a paso</h2></div>
+            <label class="native-checkbox audit-toggle"><input id="expand_all_steps" type="checkbox" /><span>Auditoría completa</span></label>
+          </div>
+          <div class="step-selector" id="step_selector" aria-label="Pasos del cálculo"></div>
+          <div class="steps selected-steps" id="step_detail" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="panel burden-panel" id="fiscal_burden"></section>
+
+      <section class="ledger-section table-panel">
+        <div class="section-heading"><span class="section-number">03</span><div><h2>Desglose anual, mensual y por paga</h2><p class="panel-note">Importes positivos para los puntos de partida y negativos para las deducciones.</p></div></div>
+        <div id="payroll_table"></div>
+      </section>
+
+      <footer class="app-footer">
+        <span>España · Comunidad de Madrid · Régimen General · 2026</span>
+        <span>Cálculo local · Sin telemetría · Los datos no salen de este dispositivo.</span>
+      </footer>
+    </main>
+  </body>
+</html>
