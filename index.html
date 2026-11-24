@@ -10,8 +10,8 @@
     />
     <meta name="description" content="Calculadora local de salario, Seguridad Social e IRPF para España y Madrid, ejercicio 2026." />
     <title>Calculadora Salario 2026</title>
-    <script type="module" crossorigin src="./assets/index-_kqq9oUO.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-By_OQTew.css">
+    <script type="module" crossorigin src="./assets/index-CUUuANwv.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BDA3iuAi.css">
   <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
   <body>
     <main class="app-shell portable-app">
@@ -158,58 +158,74 @@
               <div class="field-card"><label class="form-label" for="asc_responsible_count">Contribuyentes que aplican el mínimo</label><select class="form-select person-select" id="asc_responsible_count" data-min="1" data-selected="1"></select><p class="field-help">Indica cuántos contribuyentes comparten el mínimo.</p></div>
             </div>
           </div>
+        </section>
 
         <section class="input-section benefits-section" aria-labelledby="benefits-inputs-heading">
           <h2 id="benefits-inputs-heading">Retribución flexible y en especie</h2>
-          <p class="section-note">Cada concepto tiene su propio límite exento de IRPF. Casi todos cotizan a la Seguridad Social por su valor completo. Deja a 0 los que no tengas.</p>
-          <div class="benefits-funding">
-            <div class="field-card">
-              <label class="form-label" for="benefits_funding">Cómo se financia</label>
-              <select class="form-select" id="benefits_funding"><option value="sacrifice" selected>Sale del bruto pactado (sacrificio salarial)</option><option value="on_top">Se suma al bruto pactado</option></select>
-              <p class="field-help">En la retribución flexible habitual el bruto pactado no cambia: una parte se cobra en especie. Con la segunda opción, los beneficios son un extra que paga la empresa.</p>
+          <p class="section-note">Cada concepto tiene su propio límite exento de IRPF y casi todos cotizan a la Seguridad Social por su valor completo. En cada uno, indica si sale del bruto pactado (sacrificio salarial) o si la empresa lo paga además del bruto. Deja a 0 los que no tengas.</p>
+          <div class="benefit-groups">
+          <div class="benefit-group">
+            <div class="benefit-group-head"><h3>Cheque restaurante</h3><span class="benefit-rule">Exento de IRPF hasta 11 EUR por día laborable · cotiza a la Seguridad Social</span></div>
+            <div class="input-grid fill">
+              <div class="field-card"><label class="form-label" for="meal_funding">Financiación</label><select class="form-select" id="meal_funding"><option value="sacrifice" selected>Sacrificio salarial</option><option value="on_top">Adicional al bruto</option></select><p class="field-help">Sacrificio: sale del bruto pactado. Adicional: lo paga la empresa aparte.</p></div>
+              <div class="field-card"><label class="form-label" for="meal_daily">Importe por día (EUR)</label><input class="form-control" id="meal_daily" type="number" value="0" min="0" step="0.5" inputmode="decimal" /><p class="field-help">El exceso sobre 11 EUR/día tributa como retribución en especie.</p></div>
+              <div class="field-card"><label class="form-label" for="meal_days">Días laborables al año</label><input class="form-control" id="meal_days" type="number" value="220" min="0" step="1" inputmode="decimal" /><p class="field-help">Días en que se entrega el cheque. No cuentan vacaciones ni festivos.</p></div>
             </div>
           </div>
-          <div class="benefit-grid">
-            <fieldset class="benefit-card concept-flex">
-              <legend class="benefit-card-head"><span class="benefit-title">Cheque restaurante</span><span class="benefit-rule">Exento hasta 11 EUR por día laborable · cotiza</span></legend>
-              <div class="benefit-fields"><div><label class="form-label" for="meal_daily">Importe por día (EUR)</label><input class="form-control" id="meal_daily" type="number" value="0" min="0" step="0.5" inputmode="decimal" /></div><div><label class="form-label" for="meal_days">Días laborables al año</label><input class="form-control" id="meal_days" type="number" value="220" min="0" step="1" inputmode="decimal" /></div></div>
-              <p class="field-help">No cuentan vacaciones ni festivos. El exceso sobre 11 EUR/día tributa.</p>
-            </fieldset>
-            <fieldset class="benefit-card concept-flex">
-              <legend class="benefit-card-head"><span class="benefit-title">Tarjeta transporte público</span><span class="benefit-rule">Exenta hasta 1.500 EUR/año · cotiza</span></legend>
-              <div class="benefit-fields"><div><label class="form-label" for="transport_annual">Importe anual (EUR)</label><input class="form-control" id="transport_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /></div></div>
-              
-            </fieldset>
-            <fieldset class="benefit-card concept-flex">
-              <legend class="benefit-card-head"><span class="benefit-title">Seguro médico</span><span class="benefit-rule">Exento hasta 500 EUR por persona (1.500 con discapacidad) · cotiza</span></legend>
-              <div class="benefit-fields"><div><label class="form-label" for="health_premium_annual">Prima anual total (EUR)</label><input class="form-control" id="health_premium_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /></div><div><label class="form-label" for="health_insured">Personas aseguradas</label><select class="form-select person-select" id="health_insured" data-min="0" data-selected="1"></select></div><div><label class="form-label" for="health_insured_disability">De ellas, con discapacidad</label><select class="form-select person-select" id="health_insured_disability" data-min="0"></select></div></div>
-              <p class="field-help">Tú, tu cónyuge y tus descendientes incluidos en la póliza.</p>
-            </fieldset>
-            <fieldset class="benefit-card concept-flex">
-              <legend class="benefit-card-head"><span class="benefit-title">Cheque guardería</span><span class="benefit-rule">Exento sin límite · cotiza</span></legend>
-              <div class="benefit-fields"><div><label class="form-label" for="childcare_annual">Importe anual (EUR)</label><input class="form-control" id="childcare_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /></div></div>
-              <p class="field-help">Escuela infantil o guardería para hijos de 0 a 3 años.</p>
-            </fieldset>
-            <fieldset class="benefit-card concept-flex">
-              <legend class="benefit-card-head"><span class="benefit-title">Formación</span><span class="benefit-rule">No es renta · no cotiza</span></legend>
-              <div class="benefit-fields"><div><label class="form-label" for="training_annual">Importe anual (EUR)</label><input class="form-control" id="training_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /></div></div>
-              <p class="field-help">Sólo estudios requeridos por la empresa para el puesto de trabajo.</p>
-            </fieldset>
-            <fieldset class="benefit-card concept-flex">
-              <legend class="benefit-card-head"><span class="benefit-title">Acciones de la empresa</span><span class="benefit-rule">Exentas hasta 12.000 EUR/año · cotizan</span></legend>
-              <div class="benefit-fields"><div><label class="form-label" for="shares_annual">Valor anual entregado (EUR)</label><input class="form-control" id="shares_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /></div></div>
-              <p class="field-help">La exención exige que la oferta se dirija a toda la plantilla en igualdad de condiciones.</p>
-            </fieldset>
-            <fieldset class="benefit-card concept-flex">
-              <legend class="benefit-card-head"><span class="benefit-title">Plan de pensiones de empresa</span><span class="benefit-rule">Tributa y reduce la base (máx. 10.000 EUR) · cotiza</span></legend>
-              <div class="benefit-fields"><div><label class="form-label" for="pension_annual">Aportación anual de la empresa (EUR)</label><input class="form-control" id="pension_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /></div></div>
-              <p class="field-help">La reducción también se limita al 30% del rendimiento neto del trabajo.</p>
-            </fieldset>
-            <fieldset class="benefit-card concept-flex">
-              <legend class="benefit-card-head"><span class="benefit-title">Coche de empresa</span><span class="benefit-rule">Tributa el 20% del valor × uso privado · cotiza</span></legend>
-              <div class="benefit-fields"><div><label class="form-label" for="car_market_value">Valor de mercado nuevo (EUR)</label><input class="form-control" id="car_market_value" type="number" value="0" min="0" step="500" inputmode="decimal" /></div><div><label class="form-label" for="car_private_use">Disponibilidad para uso privado</label><div class="range-control"><input id="car_private_use" type="range" value="50" min="0" max="100" step="5" /><output for="car_private_use">50%</output></div></div><div><label class="form-label" for="car_efficiency">Eficiencia (art. 48 bis RIRPF)</label><select class="form-select" id="car_efficiency"><option value="none" selected>Sin reducción</option><option value="co2_120_value_25000">-15%: CO2 ≤ 120 g/km y valor ≤ 25.000 EUR</option><option value="hybrid_or_gas_co2_120_value_35000">-20%: híbrido o gas, CO2 ≤ 120 g/km, valor ≤ 35.000 EUR</option><option value="electric_or_phev_value_40000">-30%: eléctrico, autonomía extendida o PHEV ≤ 40.000 EUR</option></select></div><div><label class="form-label" for="car_annual_cost">Coste anual para la empresa (EUR)</label><input class="form-control" id="car_annual_cost" type="number" value="0" min="0" step="100" inputmode="decimal" /></div></div>
-              <p class="field-help">El valor incluye impuestos. El coste anual (renting) es lo que se descuenta del bruto si es retribución flexible.</p>
-            </fieldset>
+          <div class="benefit-group">
+            <div class="benefit-group-head"><h3>Tarjeta transporte público</h3><span class="benefit-rule">Exenta de IRPF hasta 1.500 EUR al año · cotiza</span></div>
+            <div class="input-grid fill">
+              <div class="field-card"><label class="form-label" for="transport_funding">Financiación</label><select class="form-select" id="transport_funding"><option value="sacrifice" selected>Sacrificio salarial</option><option value="on_top">Adicional al bruto</option></select><p class="field-help">Sacrificio: sale del bruto pactado. Adicional: lo paga la empresa aparte.</p></div>
+              <div class="field-card"><label class="form-label" for="transport_annual">Importe anual (EUR)</label><input class="form-control" id="transport_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Abono o tarjeta de transporte colectivo pagado por la empresa.</p></div>
+            </div>
+          </div>
+          <div class="benefit-group">
+            <div class="benefit-group-head"><h3>Seguro médico</h3><span class="benefit-rule">Exento hasta 500 EUR por persona (1.500 con discapacidad) · cotiza</span></div>
+            <div class="input-grid fill">
+              <div class="field-card"><label class="form-label" for="health_funding">Financiación</label><select class="form-select" id="health_funding"><option value="sacrifice" selected>Sacrificio salarial</option><option value="on_top">Adicional al bruto</option></select><p class="field-help">Sacrificio: sale del bruto pactado. Adicional: lo paga la empresa aparte.</p></div>
+              <div class="field-card"><label class="form-label" for="health_premium_annual">Prima anual total (EUR)</label><input class="form-control" id="health_premium_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Prima de la póliza pagada por la empresa.</p></div>
+              <div class="field-card"><label class="form-label" for="health_insured">Personas aseguradas</label><select class="form-select person-select" id="health_insured" data-min="0" data-selected="1"></select><p class="field-help">Tú, tu cónyuge y tus descendientes incluidos en la póliza.</p></div>
+              <div class="field-card"><label class="form-label" for="health_insured_disability">De ellas, con discapacidad</label><select class="form-select person-select" id="health_insured_disability" data-min="0" data-selected="0"></select><p class="field-help">Su límite exento es de 1.500 EUR.</p></div>
+            </div>
+          </div>
+          <div class="benefit-group">
+            <div class="benefit-group-head"><h3>Cheque guardería</h3><span class="benefit-rule">Exento de IRPF sin límite · cotiza</span></div>
+            <div class="input-grid fill">
+              <div class="field-card"><label class="form-label" for="childcare_funding">Financiación</label><select class="form-select" id="childcare_funding"><option value="sacrifice" selected>Sacrificio salarial</option><option value="on_top">Adicional al bruto</option></select><p class="field-help">Sacrificio: sale del bruto pactado. Adicional: lo paga la empresa aparte.</p></div>
+              <div class="field-card"><label class="form-label" for="childcare_annual">Importe anual (EUR)</label><input class="form-control" id="childcare_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Escuela infantil o guardería para hijos de 0 a 3 años.</p></div>
+            </div>
+          </div>
+          <div class="benefit-group">
+            <div class="benefit-group-head"><h3>Formación</h3><span class="benefit-rule">No es renta · no cotiza</span></div>
+            <div class="input-grid fill">
+              <div class="field-card"><label class="form-label" for="training_funding">Financiación</label><select class="form-select" id="training_funding"><option value="sacrifice">Sacrificio salarial</option><option value="on_top" selected>Adicional al bruto</option></select><p class="field-help">Sacrificio: sale del bruto pactado. Adicional: lo paga la empresa aparte.</p></div>
+              <div class="field-card"><label class="form-label" for="training_annual">Importe anual (EUR)</label><input class="form-control" id="training_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Sólo estudios requeridos por la empresa para el puesto de trabajo.</p></div>
+            </div>
+          </div>
+          <div class="benefit-group">
+            <div class="benefit-group-head"><h3>Acciones de la empresa</h3><span class="benefit-rule">Exentas hasta 12.000 EUR al año · cotizan</span></div>
+            <div class="input-grid fill">
+              <div class="field-card"><label class="form-label" for="shares_funding">Financiación</label><select class="form-select" id="shares_funding"><option value="sacrifice" selected>Sacrificio salarial</option><option value="on_top">Adicional al bruto</option></select><p class="field-help">Sacrificio: sale del bruto pactado. Adicional: lo paga la empresa aparte.</p></div>
+              <div class="field-card"><label class="form-label" for="shares_annual">Valor anual entregado (EUR)</label><input class="form-control" id="shares_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">La oferta debe dirigirse a toda la plantilla en igualdad de condiciones.</p></div>
+            </div>
+          </div>
+          <div class="benefit-group">
+            <div class="benefit-group-head"><h3>Plan de pensiones de empresa</h3><span class="benefit-rule">Tributa y reduce la base imponible (máx. 10.000 EUR) · cotiza</span></div>
+            <div class="input-grid fill">
+              <div class="field-card"><label class="form-label" for="pension_funding">Financiación</label><select class="form-select" id="pension_funding"><option value="sacrifice">Sacrificio salarial</option><option value="on_top" selected>Adicional al bruto</option></select><p class="field-help">Sacrificio: sale del bruto pactado. Adicional: lo paga la empresa aparte.</p></div>
+              <div class="field-card"><label class="form-label" for="pension_annual">Aportación anual de la empresa (EUR)</label><input class="form-control" id="pension_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">La reducción también se limita al 30% del rendimiento neto del trabajo.</p></div>
+            </div>
+          </div>
+          <div class="benefit-group">
+            <div class="benefit-group-head"><h3>Coche de empresa</h3><span class="benefit-rule">Tributa el 20% del valor × disponibilidad privada · cotiza</span></div>
+            <div class="input-grid fill">
+              <div class="field-card"><label class="form-label" for="car_funding">Financiación</label><select class="form-select" id="car_funding"><option value="sacrifice" selected>Sacrificio salarial</option><option value="on_top">Adicional al bruto</option></select><p class="field-help">Sacrificio: sale del bruto pactado. Adicional: lo paga la empresa aparte.</p></div>
+              <div class="field-card"><label class="form-label" for="car_market_value">Valor de mercado nuevo (EUR)</label><input class="form-control" id="car_market_value" type="number" value="0" min="0" step="500" inputmode="decimal" /><p class="field-help">Coste de adquisición o valor como nuevo, impuestos incluidos.</p></div>
+              <div class="field-card"><label class="form-label" for="car_private_use">Disponibilidad para uso privado</label><div class="range-control"><input id="car_private_use" type="range" value="50" min="0" max="100" step="5" /><output for="car_private_use">50%</output></div><p class="field-help">Sólo tributa la parte disponible para fines particulares, se use o no.</p></div>
+              <div class="field-card"><label class="form-label" for="car_efficiency">Eficiencia (art. 48 bis RIRPF)</label><select class="form-select" id="car_efficiency"><option value="none" selected>Sin reducción</option><option value="co2_120_value_25000">-15%: CO2 ≤ 120 g/km y valor ≤ 25.000 EUR</option><option value="hybrid_or_gas_co2_120_value_35000">-20%: híbrido o gas, CO2 ≤ 120 g/km, valor ≤ 35.000 EUR</option><option value="electric_or_phev_value_40000">-30%: eléctrico, autonomía extendida o PHEV ≤ 40.000 EUR</option></select><p class="field-help">Reducción para vehículos eficientes que cumplen Euro 6. Valores antes de impuestos.</p></div>
+              <div class="field-card"><label class="form-label" for="car_annual_cost">Coste anual para la empresa (EUR)</label><input class="form-control" id="car_annual_cost" type="number" value="0" min="0" step="100" inputmode="decimal" /><p class="field-help">Renting o equivalente. En retribución flexible, es lo que se descuenta del bruto.</p></div>
+            </div>
+          </div>
           </div>
         </section>
       </details>
