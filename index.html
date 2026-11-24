@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#145c9e" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' blob: https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'"
+      content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'"
     />
     <meta name="description" content="Calculadora local de salario, Seguridad Social e IRPF para España y Madrid, ejercicio 2026." />
     <title>Calculadora Salario 2026</title>
-    <script type="module" crossorigin src="./assets/index-BuXhRHDL.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CiYy_bDR.css">
+    <script type="module" crossorigin src="./assets/index-BuGjvqSm.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B4z9ZQpX.css">
   <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
   <body>
     <main class="app-shell portable-app">
@@ -71,7 +71,7 @@
             <div class="field-card">
               <label class="form-label" for="civil_status">Situación familiar IRPF</label>
               <select class="form-select" id="civil_status"></select>
-              <p class="field-help">Situación usada para los umbrales de obligación de retener.</p>
+              <p class="field-help">Determina el límite por debajo del cual no se retiene en nómina (art. 81 RIRPF).</p>
             </div>
             <div class="field-card">
               <label class="form-label" for="disability_grade">Discapacidad contribuyente</label>
@@ -108,18 +108,23 @@
         <section class="input-section" aria-labelledby="deductions-inputs-heading">
           <h2 id="deductions-inputs-heading">Gastos deducibles y mínimos personales</h2>
           <div class="input-grid">
-            <div class="field-card checkbox-card">
-              <label class="native-checkbox"><input id="employment_expense_toggle" type="checkbox" /><span>Aplicar gasto deducible general de 2.000 EUR</span></label>
-              <p class="field-help">Déjalo apagado para una vista tipo nómina; actívalo para estimar declaración anual.</p>
+            <div class="field-card">
+              <label class="form-label" for="irpf_mode">IRPF que se descuenta del neto</label>
+              <select class="form-select" id="irpf_mode"><option value="nomina" selected>Nómina: retención AEAT</option><option value="declaracion">Declaración anual: cuota Madrid</option></select>
+              <p class="field-help">La nómina retiene según el algoritmo oficial de la AEAT. La declaración calcula la cuota final con las escalas estatal y de Madrid. Ambos aplican siempre el gasto general de 2.000 EUR (art. 19.2.f LIRPF).</p>
             </div>
             <div class="field-card">
               <label class="form-label" for="justified_expenses">Gastos deducibles justificados adicionales</label>
               <input class="form-control" id="justified_expenses" type="number" value="0" min="0" step="100" inputmode="decimal" />
-              <p class="field-help">Importe anual adicional al gasto general de 2.000 EUR.</p>
+              <p class="field-help">Cuotas sindicales, colegio profesional obligatorio o defensa jurídica. Son adicionales al gasto general de 2.000 EUR, que se aplica siempre.</p>
             </div>
             <div class="field-card checkbox-card">
               <label class="native-checkbox"><input id="assistance" type="checkbox" /><span>Asistencia / movilidad reducida</span></label>
-              <p class="field-help">Marca si aplica el incremento vinculado a discapacidad.</p>
+              <p class="field-help">Con discapacidad del 33% o más: +3.000 EUR de mínimo por asistencia y otros gastos de 7.750 EUR. Con un 65% o más se aplica automáticamente.</p>
+            </div>
+            <div class="field-card checkbox-card">
+              <label class="native-checkbox"><input id="contract_under_one_year" type="checkbox" /><span>Contrato de duración inferior a un año</span></label>
+              <p class="field-help">Retención mínima en nómina del 2% (art. 86.2 RIRPF). No afecta a la cuota anual.</p>
             </div>
           </div>
         </section>
@@ -148,6 +153,31 @@
               <div class="field-card"><label class="form-label" for="asc_assistance">Con asistencia</label><select class="form-select person-select" id="asc_assistance" data-min="0"></select><p class="field-help">Número con derecho al incremento por asistencia.</p></div>
               <div class="field-card"><label class="form-label" for="asc_responsible_count">Contribuyentes que aplican el mínimo</label><select class="form-select person-select" id="asc_responsible_count" data-min="1" data-selected="1"></select><p class="field-help">Indica cuántos contribuyentes comparten el mínimo.</p></div>
             </div>
+          </div>
+
+        <section class="input-section" aria-labelledby="benefits-inputs-heading">
+          <h2 id="benefits-inputs-heading">Retribución flexible y en especie</h2>
+          <p class="section-note">Importes anuales salvo indicación. Cada concepto tiene su límite exento de IRPF; casi todos cotizan a la Seguridad Social por su valor completo.</p>
+          <div class="input-grid">
+            <div class="field-card">
+              <label class="form-label" for="benefits_funding">Cómo se financia</label>
+              <select class="form-select" id="benefits_funding"><option value="sacrifice" selected>Sale del bruto pactado (sacrificio salarial)</option><option value="on_top">Se suma al bruto pactado</option></select>
+              <p class="field-help">En la retribución flexible habitual el bruto pactado no cambia: parte se cobra en especie.</p>
+            </div>
+            <div class="field-card"><label class="form-label" for="meal_daily">Cheque restaurante (EUR/día)</label><input class="form-control" id="meal_daily" type="number" value="0" min="0" step="0.5" inputmode="decimal" /><p class="field-help">Exento hasta 11 EUR por día laborable. El exceso tributa. Cotiza a la Seguridad Social.</p></div>
+            <div class="field-card"><label class="form-label" for="meal_days">Días laborables con cheque</label><input class="form-control" id="meal_days" type="number" value="220" min="0" step="1" inputmode="numeric" /><p class="field-help">Días al año en que se entrega el cheque.</p></div>
+            <div class="field-card"><label class="form-label" for="transport_annual">Tarjeta transporte público</label><input class="form-control" id="transport_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Exenta hasta 1.500 EUR al año. Cotiza a la Seguridad Social.</p></div>
+            <div class="field-card"><label class="form-label" for="health_premium_annual">Seguro médico (prima anual)</label><input class="form-control" id="health_premium_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Exento hasta 500 EUR por persona asegurada (1.500 EUR con discapacidad).</p></div>
+            <div class="field-card"><label class="form-label" for="health_insured">Personas aseguradas</label><select class="form-select person-select" id="health_insured" data-min="0" data-selected="1"></select><p class="field-help">Tú, tu cónyuge y tus descendientes en la póliza.</p></div>
+            <div class="field-card"><label class="form-label" for="health_insured_disability">Aseguradas con discapacidad</label><select class="form-select person-select" id="health_insured_disability" data-min="0"></select><p class="field-help">De las anteriores, cuántas tienen discapacidad.</p></div>
+            <div class="field-card"><label class="form-label" for="childcare_annual">Cheque guardería</label><input class="form-control" id="childcare_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Escuela infantil de 0 a 3 años: exento de IRPF sin límite. Cotiza.</p></div>
+            <div class="field-card"><label class="form-label" for="training_annual">Formación ligada al puesto</label><input class="form-control" id="training_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Estudios requeridos por la empresa: no es renta y no cotiza.</p></div>
+            <div class="field-card"><label class="form-label" for="shares_annual">Acciones de la empresa</label><input class="form-control" id="shares_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Exentas hasta 12.000 EUR al año si se ofrecen a toda la plantilla. Cotizan.</p></div>
+            <div class="field-card"><label class="form-label" for="pension_annual">Aportación empresa a plan de pensiones</label><input class="form-control" id="pension_annual" type="number" value="0" min="0" step="50" inputmode="decimal" /><p class="field-help">Tributa como especie y reduce la base imponible (máx. 10.000 EUR y 30% del rendimiento neto). Cotiza.</p></div>
+            <div class="field-card"><label class="form-label" for="car_market_value">Coche de empresa: valor de mercado nuevo</label><input class="form-control" id="car_market_value" type="number" value="0" min="0" step="500" inputmode="decimal" /><p class="field-help">Impuestos incluidos. La valoración anual es el 20%.</p></div>
+            <div class="field-card"><label class="form-label" for="car_private_use">Disponibilidad para uso privado</label><div class="range-control"><input id="car_private_use" type="range" value="50" min="0" max="100" step="5" /><output for="car_private_use">50%</output></div><p class="field-help">Sólo tributa la parte disponible para fines particulares, se use o no.</p></div>
+            <div class="field-card"><label class="form-label" for="car_efficiency">Eficiencia del vehículo (art. 48 bis RIRPF)</label><select class="form-select" id="car_efficiency"><option value="none" selected>Sin reducción</option><option value="co2_120_value_25000">-15%: CO2 ≤ 120 g/km y valor ≤ 25.000 EUR</option><option value="hybrid_or_gas_co2_120_value_35000">-20%: híbrido o gas, CO2 ≤ 120 g/km, valor ≤ 35.000 EUR</option><option value="electric_or_phev_value_40000">-30%: eléctrico, autonomía extendida o PHEV ≤ 40.000 EUR</option></select><p class="field-help">Vehículos eficientes que cumplen Euro 6. Valores antes de impuestos.</p></div>
+            <div class="field-card"><label class="form-label" for="car_annual_cost">Coche de empresa: coste anual (renting)</label><input class="form-control" id="car_annual_cost" type="number" value="0" min="0" step="100" inputmode="decimal" /><p class="field-help">Lo que paga la empresa al año. En retribución flexible, lo que se descuenta del bruto.</p></div>
           </div>
         </section>
       </details>
@@ -191,22 +221,5 @@
         <span class="creator-credit">Creado por <a href="https://danielalmazan.com" target="_blank" rel="noopener noreferrer">Daniel Almazán</a> (2026)</span>
       </footer>
     </main>
-  <!-- danielalmazan.com support footer -->
-<script src="https://danielalmazan.com/assets/site-footer/v1/site-footer.js" defer data-placement="auto" data-project-es="Calculadora Salario 2026" data-project-en="Calculadora Salario 2026"></script>
-<!-- Cloudflare Web Analytics -->
-<script id="cf-analytics-loader">
-(() => {
-  try {
-    if (localStorage.getItem("exclude_cf_analytics") === "1") return;
-  } catch { /* Storage unavailable: retain normal analytics. */ }
-  if (document.querySelector('script[src^="https://static.cloudflareinsights.com/beacon.min.js"]')) return;
-  const beacon = document.createElement("script");
-  beacon.type = "module";
-  beacon.src = "https://static.cloudflareinsights.com/beacon.min.js";
-  beacon.setAttribute("data-cf-beacon", '{"token": "7e557ad432574707b8ba15bdd75c688e"}');
-  document.body.appendChild(beacon);
-})();
-</script>
-<!-- End Cloudflare Web Analytics -->
-</body>
+  </body>
 </html>
